@@ -1,0 +1,66 @@
+@startuml
+title: Initial System Design 
+
+<style>
+component {
+  BackGroundColor #mediumseagreen
+  LineThickness 1
+  LineColor black
+}
+
+database {
+  BackGroundColor #skyblue
+  LineThickness 1
+  LineColor black
+}
+
+storage {
+  BackGroundColor #floralwhite
+  LineThickness 1
+  LineColor black
+}
+
+</style>
+
+component Frontend
+
+component API_Gateway[
+  API Gateway
+]
+
+component AuthService[
+  Authorization Service
+]
+
+component DockerService[
+  Docker Service 
+]
+
+component ProjectService [
+  Project Service
+]
+
+component DockerEngine [
+  Docker Engine API
+]
+
+database AuthDB
+database ProjectDB
+database  DockerDB
+
+storage ProjectFiles[
+  Project File storage
+]
+
+
+Frontend -- API_Gateway : REST
+API_Gateway -- AuthService: grpc
+API_Gateway -- DockerService: grpc
+API_Gateway -- ProjectService: grpc
+AuthService -- AuthDB
+DockerService -- DockerDB
+DockerService -u- DockerEngine: REST
+ProjectService -- ProjectDB
+ProjectService -- ProjectFiles: read/write
+
+@enduml
